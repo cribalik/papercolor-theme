@@ -245,11 +245,11 @@ if s:is_dark " DARK VARIANT
   let s:green   = ['#dfaf00', '178'] "Boolean/Special
   let s:blue    = ['#00afaf', '37'] "Keyword
 
-  let s:pink    = ['#afdf00', '148'] "Type
+  let s:orange    = ['#afdf00', '148'] "Type
   let s:olive   = ['#dfaf5f', '179'] "String
   let s:navy    = ['#df875f', '173'] "StorageClass
 
-  let s:orange  = ['#ff5faf', '205'] "Number
+  let s:pink  = ['#ff5faf', '205'] "Number
   let s:purple  = ['#af87af', '139'] "Repeat/Conditional
   let s:aqua    = ['#5fafdf', '74'] "Operator/Delimiter
 
@@ -284,15 +284,6 @@ if s:is_dark " DARK VARIANT
   let s:tabline_inactive_fg = ['#c6c6c6', '250']
   let s:tabline_inactive_bg = ['#585858', '240']
 
-  " BufTabLine:
-  let s:buftabline_bg          = ['#3a3a3a', '235']
-  let s:buftabline_current_fg  = ['#1c1c1c', '233']
-  let s:buftabline_current_bg  = ['#00afaf', '37']
-  let s:buftabline_active_fg   = ['#1c1c1c', '233']
-  let s:buftabline_active_bg   = ['#00afaf', '37']
-  let s:buftabline_inactive_fg = ['#c6c6c6', '250']
-  let s:buftabline_inactive_bg = ['#585858', '240']
-
   " Statusline:
   let s:statusline_active_fg   = ['#1c1c1c', '233']
   let s:statusline_active_bg   = ['#5f8787', '66']
@@ -308,8 +299,8 @@ if s:is_dark " DARK VARIANT
   let s:visual_bg = ['#8787af', '103']
 
   " Folded:
-  let s:folded_fg = ['#afdf00', '148']
-  let s:folded_bg = ['#444444', '237']
+  let s:folded_fg = s:comment
+  let s:folded_bg = s:background
 
   " WildMenu:
   let s:wildmenu_fg  = s:background
@@ -378,16 +369,6 @@ else " LIGHT VARIANT
   let s:tabline_inactive_fg = s:background
   let s:tabline_inactive_bg = s:aqua
 
-  " BufTabLine:
-  let s:buftabline_bg          = s:navy
-  let s:buftabline_current_fg  = s:foreground
-  let s:buftabline_current_bg  = s:window
-  let s:buftabline_active_fg   = s:background
-  let s:buftabline_active_bg   = s:blue
-  let s:buftabline_inactive_fg = s:background
-  let s:buftabline_inactive_bg = s:aqua
-
-
   " Statusline:
   let s:statusline_active_fg   = s:window
   let s:statusline_active_bg   = s:navy
@@ -403,8 +384,8 @@ else " LIGHT VARIANT
   let s:visual_bg = s:blue
 
   " Folded:
-  let s:folded_fg = s:navy
-  let s:folded_bg = ['#afdfff', '153']
+  let s:folded_fg = s:comment
+  let s:folded_bg = s:background
 
   " WildMenu:
   let s:wildmenu_fg  = s:foreground
@@ -452,12 +433,6 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call s:HL("TabLine", s:tabline_inactive_fg, s:tabline_inactive_bg, "None")
   call s:HL("TabLineFill", "", s:tabline_bg, "None")
   call s:HL("TabLineSel", s:tabline_active_fg, s:tabline_active_bg, "None")
-
-  call s:HL("BufTabLineCurrent", s:buftabline_current_fg, s:buftabline_current_bg, "None")
-  call s:HL("BufTabLineActive", s:buftabline_active_fg, s:buftabline_active_bg, "None")
-  call s:HL("BufTabLineHidden", s:buftabline_inactive_fg, s:buftabline_inactive_bg, "None")
-  call s:HL("BufTabLineFill", "", s:buftabline_bg, "None")
-
   call s:HL("StatusLine", s:statusline_active_fg, s:statusline_active_bg, "bold")
   call s:HL("StatusLineNC", s:statusline_inactive_fg, s:statusline_inactive_bg, "None")
   call s:HL("VertSplit", s:divider, s:background, "none")
@@ -495,7 +470,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call s:HL("Float", s:orange, "", "")
 
   call s:HL("Identifier", s:navy, "", "")
-  call s:HL("Function", s:foreground, "", "")
+  call s:HL("Function", s:aqua, "", "")
 
   call s:HL("Statement", s:pink, "", "none")
   call s:HL("Conditional", s:purple, "", "bold")
@@ -580,13 +555,13 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call s:HL("cmakeOperators", s:red, "", "")
 
   " C Highlighting
-  call s:HL("cType", s:pink, "", "bold")
+  call s:HL("cType", s:blue, "", "bold")
   call s:HL("cFormat", s:olive, "", "")
-  call s:HL("cStorageClass", s:navy, "", "bold")
+  call s:HL("cStorageClass", s:navy, "", "")
 
   call s:HL("cBoolean", s:green, "", "")
   call s:HL("cCharacter", s:olive, "", "")
-  call s:HL("cConstant", s:green, "", "bold")
+  call s:HL("cConstant", s:foreground, "", "")
   call s:HL("cConditional", s:purple, "", "bold")
   call s:HL("cSpecial", s:olive, "", "bold")
   call s:HL("cDefine", s:blue, "", "")
@@ -602,16 +577,17 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   " call s:HL("cSemiColon","", s:blue, "")
   call s:HL("cOperator",s:aqua, "", "")
   " call s:HL("cStatement",s:pink, "", "")
-  call s:HL("cFunction", s:foreground, "", "")
+  call s:HL("cFunction", s:aqua, "", "")
   " call s:HL("cTodo", s:comment, "", "bold")
   " call s:HL("cStructure", s:blue, "", "bold")
   call s:HL("cCustomParen", s:foreground, "", "")
-  " call s:HL("cCustomFunc", s:foreground, "", "")
-  " call s:HL("cUserFunction",s:blue, "", "bold")
+  call s:HL("cCustomFunc", s:aqua, "", "")
+  call s:HL("cCustomClass", s:blue, "", "bold")
+  call s:HL("cUserFunction",s:aqua, "", "bold")
   call s:HL("cOctalZero", s:purple, "", "bold")
 
   " CPP highlighting
-  call s:HL("cppBoolean", s:navy, "", "")
+  call s:HL("cppBoolean", s:orange, "", "")
   call s:HL("cppSTLnamespace", s:purple, "", "")
   call s:HL("cppSTLconstant", s:foreground, "", "")
   call s:HL("cppSTLtype", s:foreground, "", "")
@@ -622,7 +598,7 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
   call s:HL("cppExceptions", s:red, "", "")
   call s:HL("cppStatement", s:blue, "", "")
   call s:HL("cppStorageClass", s:navy, "", "bold")
-  call s:HL("cppAccess",s:blue, "", "")
+  call s:HL("cppAccess",s:navy, "", "")
   " call s:HL("cppSTL",s:blue, "", "")
 
 
@@ -801,8 +777,7 @@ call s:HL("cssClassName", s:pink, "", "")
   call s:HL("javaClassDecl", s:aqua, "", "bold")
   call s:HL("javaScopeDecl", s:blue, "", "bold")
   call s:HL("javaStorageClass", s:navy, "", "bold")
-  call s:HL("javaBoolean", s:green, "", "bold")
-  call s:HL("javaConstant", s:blue, "", "")
+  call s:HL("javaBoolean", s:navy, "", "")
   call s:HL("javaCommentTitle", s:wine, "", "")
   call s:HL("javaDocTags", s:aqua, "", "")
   call s:HL("javaDocComment", s:comment, "", "")
@@ -1022,16 +997,6 @@ call s:HL("cssClassName", s:pink, "", "")
   call s:HL("perlSubName", s:aqua, "", "bold")
   call s:HL("perlSpecialString", s:olive, "", "bold")
 
-  " Pascal Highlighting
-  call s:HL("pascalType", s:pink, "", "bold")
-  call s:HL("pascalStatement", s:blue, "", "bold")
-  call s:HL("pascalPredefined", s:pink, "", "")
-  call s:HL("pascalFunction", s:foreground, "", "")
-  call s:HL("pascalStruct", s:navy, "", "bold")
-  call s:HL("pascalOperator", s:aqua, "", "bold")
-  call s:HL("pascalPreProc", s:green, "", "")
-  call s:HL("pascalAcces", s:navy, "", "bold")
-
   " Lua Highlighting
   call s:HL("luaFunc", s:foreground, "", "")
   call s:HL("luaIn", s:blue, "", "bold")
@@ -1121,10 +1086,10 @@ call s:HL("cssClassName", s:pink, "", "")
   call s:HL("xmlEqual", s:orange, "", "")
   call s:HL("xmlAttrib", s:navy, "", "")
   call s:HL("xmlAttribPunct", s:pink, "", "")
-  call s:HL("xmlTag", s:blue, "", "")
-  call s:HL("xmlTagName", s:blue, "", "")
-  call s:HL("xmlEndTag", s:blue, "", "")
-  call s:HL("xmlNamespace", s:orange, "", "")
+  call s:HL("xmlTag", s:wine, "", "")
+  call s:HL("xmlTagName", s:wine, "", "")
+  call s:HL("xmlEndTag", s:wine, "", "")
+  call s:HL("xmlNamespace", s:blue, "", "")
 
   " Exlixir Highlighting
   " @target https://github.com/elixir-lang/vim-elixir
